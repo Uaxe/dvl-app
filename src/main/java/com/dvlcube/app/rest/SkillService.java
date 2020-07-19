@@ -5,6 +5,7 @@ import static com.dvlcube.app.manager.data.e.Menu.CONFIGURATION;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 
 import javax.validation.Valid;
 
@@ -35,11 +36,11 @@ public class SkillService implements MxFilterableBeanService<SkillBean, Long> {
 
 	@Autowired
 	private SkillRepository repo;
-
+	
 	@Override
 	@GetMapping
 	public Iterable<SkillBean> get(@RequestParam Map<String, String> params) {
-		return repo.firstPage();
+		return repo.firstPage(Sort.by("name"));
 	}
 
 	@Override
@@ -77,10 +78,25 @@ public class SkillService implements MxFilterableBeanService<SkillBean, Long> {
 	public List<SkillBean> getGroupFiltered(@PathVariable String group, @RequestParam Map<String, String> params) {
 		return repo.findAllBy(params, group);
 	}
+	
+	@GetMapping("/exists/name/{name}")
+	public boolean existName(@PathVariable String name) {
+		if(repo.findByName(name) != null) {
+			return true;
+		}
+		else {
+			return false;
+		}		
+	}
+	
+	@GetMapping("/name/{name}")
+	public SkillBean getByName(@PathVariable String name) {
+		return repo.findByName(name);
+	}
 
 	@GetMapping("/like")
-	public Iterable<SkillBean> getLike(@RequestParam(required = true) String id) {
-		return repo.findAllLike(id);
+	public Iterable<SkillBean> getLike(@RequestParam(required = true) String name) {
+		return repo.findAllLike(name);
 	}
 
 	@DeleteMapping("/{id}")

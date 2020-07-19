@@ -163,7 +163,7 @@ public class DvlJpaRepository<T extends MxBean<? extends Serializable>, ID exten
 
 		id = id.toLowerCase();
 
-		String idParam = "id";
+		String idParam = "name";
 
 		Like like = ei.getJavaType().getAnnotation(Like.class);
 		if (like != null) {

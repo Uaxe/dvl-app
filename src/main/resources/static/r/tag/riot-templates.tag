@@ -89,7 +89,7 @@ this.state = {
     </div>
     <div class="footer-copyright">
         <div class="container">
-            dvl-core.it
+            Washington Machado do Nascimento
         </div>
     </div>
 </footer>
